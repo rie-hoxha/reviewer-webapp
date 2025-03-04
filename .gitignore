@@ -4,8 +4,7 @@ node_modules/
 build/
 # Environment variables
 .env
-env
-env/*.env
+env/
 
 # macOS system files
 .DS_Store
