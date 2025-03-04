@@ -1,0 +1,50 @@
+version: "3.8"
+
+services:
+  mongo:
+    container_name: reviewer-webapp-mongo
+    restart: always
+    build:
+      context: ./mongo
+    env_file:
+      - ./env/mongo.env
+    networks:
+      - mongo-server
+  
+  mysql:
+    container_name: reviewer-webapp-mysql
+    restart: always
+    build:
+      context: ./mysql
+    env_file:
+      - ./env/mysql.env
+    networks:
+      - mysql-server
+  
+  backend:
+    container_name: reviewer-webapp-backend
+    build:
+      context: ./backend
+    ports:
+      - 8080:8080
+    env_file:
+      - ./env/backend.env
+    depends_on:
+      - mongo
+      - mysql
+    networks:
+      - mysql-server
+      - mongo-server
+  
+  frontend:
+    container_name: reviewer-webapp-frontend
+    build:
+      context: ./frontend
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+
+networks:
+  mysql-server:
+  mongo-server:
