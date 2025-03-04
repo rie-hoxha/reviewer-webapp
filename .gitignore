@@ -4,6 +4,7 @@ node_modules/
 build/
 # Environment variables
 .env
+env
 # macOS system files
 .DS_Store
 # Log files
